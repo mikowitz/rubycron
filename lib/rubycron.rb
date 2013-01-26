@@ -3,6 +3,7 @@ require 'utility_functions'
 
 module Rubycron
   def self.parse(expression)
+    return 'Invalid Format' if expression =~ /[^\*\d\-,\/LW#\s]/
     return 'Invalid Format' if expression.split(/\s+/).size < 5
 
     minute, hour, day, month, weekday, year = expression.split(/\s+/)

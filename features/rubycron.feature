@@ -9,6 +9,7 @@ Feature: Parsing a cron expression
 
     Examples:
       | cron_expression   | human_readable                                                    |
+      | sudo rm -r -f *   | Invalid Format                                                    |
       | *                 | Invalid Format                                                    |
       | * *               | Invalid Format                                                    |
       | * * *             | Invalid Format                                                    |
