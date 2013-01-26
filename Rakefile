@@ -8,4 +8,4 @@ Cucumber::Rake::Task.new('features:wip', 'Run work-in-progress cukes') do |task|
   task.profile = 'wip'
 end
 
-task default: :features
+task default: 'features:wip'
