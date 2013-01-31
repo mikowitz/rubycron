@@ -33,11 +33,11 @@ module Rubycron
       parts = @element.split(',')
       res = []
       parts.each do |part|
-        if part =~ /-/
+        if part =~ /\-/
           range = part.scan(/(\d+)-(\d+)/)[0]
           res += Array(range[0].to_i..range[1].to_i)
         else
-          res << part.to_i
+          res << part
         end
       end
       res
