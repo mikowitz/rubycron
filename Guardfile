@@ -1,7 +1,7 @@
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
-guard 'cucumber', :cli => '--profile wip' do
+guard 'cucumber', :cli => '--profile default' do
   watch(%r{^features/.+\.feature$})
   watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^lib/.+$})          { 'features' }
