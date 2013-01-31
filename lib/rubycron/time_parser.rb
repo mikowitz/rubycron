@@ -1,5 +1,10 @@
 module Rubycron
   class TimeParser
+    MINUTE_FREQUENCY = Proc.new {|frequency| "every #{frequency} minutes"}
+    TIME = Proc.new {|hour, minute| [hour, minute].map(&:two_digits).join(":")}
+    BETWEEN_TWO_TIMES = Proc.new {|s_hour, s_minute, e_hour, e_minute| "between #{TIME[s_hour, s_minute]} and #{TIME[e_hour, e_minute]}" }
+    BETWEEN_TWO_MINUTES = Proc.new {|s_minute, e_minute| "between xx:#{s_minute.two_digits} and xx:#{e_minute.two_digits}" }
+
     def initialize(minute, hour)
       @minute, @hour = minute, hour
     end
@@ -20,34 +25,35 @@ module Rubycron
           else "at the #{minute.collection[0].to_i.ordinal} minute of every hour"
           end
         elsif minute.frequency?
-          ret = "every #{minute.frequency} minutes"
+          ret = MINUTE_FREQUENCY[minute.frequency]
           if minute.unbounded_range?
             ret += " of every hour starting at xx:#{minute.start.two_digits}"
           elsif minute.range?
-            ret += " of every hour between xx:#{minute.start.two_digits} and xx:#{minute.stop.two_digits}"
+            ret += " of every hour #{BETWEEN_TWO_MINUTES[minute.start, minute.stop]}"
           end
           ret
         elsif minute.range?
-          "every minute of every hour between xx:#{minute.start.two_digits} and xx:#{minute.stop.two_digits}"
+          "every minute of every hour #{BETWEEN_TWO_MINUTES[minute.start, minute.stop]}"
         elsif minute.collection?
           "at the #{minute.collection.map{|d| d.to_i.ordinal}.to_sentence} minutes of every hour"
         end
       elsif hour.single_hour?
-        hour_range = "#{hour.collection[0].two_digits}:00 and #{(hour.collection[0] + 1).two_digits}:00"
+        hour_range = BETWEEN_TWO_TIMES[hour.collection.first, 0, hour.collection.first.to_i + 1, 0]
         if minute.every_minute?
-          "every minute between #{hour_range}"
+          "every minute #{hour_range}"
         elsif minute.single_minute?
           "at #{hour.collection[0].two_digits}:#{minute.collection[0].two_digits}"
         elsif minute.frequency?
+          freq = MINUTE_FREQUENCY[minute.frequency]
           if minute.unbounded_range?
-            "every #{minute.frequency} minutes between #{hour.collection[0].two_digits}:#{minute.start.two_digits} and #{(hour.collection[0] + 1).two_digits}:00"
+            "#{freq} #{BETWEEN_TWO_TIMES[hour.collection.first, minute.start, hour.collection.first.to_i + 1, 0]}"
           elsif minute.range?
-            "every #{minute.frequency} minutes between #{hour.collection[0].two_digits}:#{minute.start.two_digits} and #{hour.collection[0].two_digits}:#{minute.stop.two_digits}"
+            "#{freq} #{BETWEEN_TWO_TIMES[hour.collection.first, minute.start, hour.collection.first, minute.stop]}"
           else
-            "every #{minute.frequency} minutes between #{hour_range}"
+            "#{freq} #{hour_range}"
           end
         elsif minute.range?
-          "every minute between #{hour.collection[0].two_digits}:#{minute.start.two_digits} and #{hour.collection[0].two_digits}:#{minute.stop.two_digits}"
+          "every minute #{BETWEEN_TWO_TIMES[hour.collection.first, minute.start, hour.collection.first, minute.stop]}"
         elsif minute.collection?
           "at the #{minute.collection.map{|d| d.to_i.ordinal}.to_sentence} minutes of every hour"
         end
