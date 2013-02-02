@@ -14,14 +14,14 @@ module Rubycron
 
     def single_element; collection[0]; end
 
+    def collection_ordinals
+      "the #{collection.map(&:ordinal).to_sentence} #{self.name}s"
+    end
 
     def to_s
-      return "E" if every_every?
-      return "e" if every?
-      return "F" if frequency? && unbounded_range?
+      return "e" if every_every?
       return "f" if frequency? && range?
       return "v" if frequency?
-      return "u" if unbounded_range?
       return "r" if range?
       return "s" if single_element?
       return "c" if collection?
