@@ -7,12 +7,17 @@ module Rubycron
     def parse
       if @element == '*'
         { every: true }
+      elsif @element =~ /^l$/i
+        { last: true }
+      elsif @element =~ /\d+w$/i
+        @element = @element.sub(/w$/, '')
+        { nearest: true, collection: parse_collection }
       elsif @element =~ /\//
         start, frequency = @element.scan(/(.*)\/(.*)/)[0]
         if start == '*'
           { every: true, frequency: frequency }
         elsif start =~ /^\d+$/ #single number
-          { every: true, frequency: frequency, start: start, stop: 59 }
+          { every: true, frequency: frequency, start: start }
         elsif start =~ /^\d+-\d+$/
           range_start, range_end = *start.scan(/(\d+)-(\d+)/)[0]
           { every: true, frequency: frequency, start: range_start, stop: range_end }
