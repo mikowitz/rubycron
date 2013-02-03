@@ -1,5 +1,5 @@
 require 'utility_functions'
-%w{ cron_struct parser day_parser time_parser version }.each {|file| require "rubycron/#{file}" }
+%w{ cron_struct parser presenters/day_presenter presenters/time_presenter version }.each {|file| require "rubycron/#{file}" }
 
 module Rubycron
   def self.parse(expression)
@@ -10,7 +10,6 @@ module Rubycron
 
     time = TimeParser.parse(@minute, @hour)
     day = DayParser.parse(@day, @month, @weekday)
-    #result = day == 'every day' && time !~ /^at \d{2}:\d{2}$/ ? "#{time}" : "#{time} #{day}"
     result = "#{time} #{day}"
     result.sub(/^(.)/) { $1 == 'x' ? $1 : $1.upcase}
   end
