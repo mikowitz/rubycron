@@ -11,8 +11,8 @@ module Rubycron
     end
 
     def parse
-      minute = MinuteHash.new(Parser.new(@minute).parse)
-      hour = HourHash.new(Parser.new(@hour).parse)
+      minute = MinuteHash.new(Parser.parse(@minute))
+      hour = HourHash.new(Parser.parse(@hour))
 
       case [minute, hour].map(&:to_s).join('')
       when /[ev]e/ then minute.send(minute.to_s)

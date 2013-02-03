@@ -14,9 +14,9 @@ module Rubycron
     end
 
     def parse
-      day = DayHash.new(Parser.new(@day).parse)
-      month = MonthHash.new(Parser.new(@month).parse)
-      weekday = WeekdayHash.new(Parser.new(@weekday).parse)
+      day = DayHash.new(Parser.parse(@day))
+      month = MonthHash.new(Parser.parse(@month))
+      weekday = WeekdayHash.new(Parser.parse(@weekday))
 
       case [day, month, weekday].map(&:to_s).join('')
       when 'eee' then 'every day'
