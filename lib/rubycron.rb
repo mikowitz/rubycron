@@ -20,7 +20,7 @@ module Rubycron
     @hour =~ /^[\*\/,\-\d]+$/ &&
     @day =~ /^[\*\/,\-\?LW\d]+$/ &&
     @month =~ /^[\*\/,\-\djanfebmrpyjulgsoctv]+$/i &&
-    @weekday =~ /^[\*\/,\-\?\dsunmotewdhfraL#]+$/i &&
+    @weekday =~ /^[\*\/,\-\?\dsunmotewdhfriaL#]+$/i &&
     (@year.nil? || @year  =~ /^[\*\/,\-\d]*$/)
   end
 end

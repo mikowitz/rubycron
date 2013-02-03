@@ -9,8 +9,14 @@ module Rubycron
         { every: true }
       elsif @element =~ /^l$/i
         { last: true }
+      elsif @element =~ /(\d|\w{3})l$/i
+        @element = @element.sub(/l$/i, '')
+        { last: true, collection: parse_collection }
+      elsif @element =~ /.*#\d$/
+        @element, nth_week = @element.scan(/(.*)#(\d)$/)[0]
+        { nth_week: nth_week, collection: parse_collection }
       elsif @element =~ /\d+w$/i
-        @element = @element.sub(/w$/, '')
+        @element = @element.sub(/w$/i, '')
         { nearest: true, collection: parse_collection }
       elsif @element =~ /\//
         start, frequency = @element.scan(/(.*)\/(.*)/)[0]
