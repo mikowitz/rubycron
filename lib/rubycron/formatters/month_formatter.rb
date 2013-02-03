@@ -36,6 +36,8 @@ module Rubycron
         get_month(month)
       end
 
+      alias :u :f
+
       def v
         "every #{frequency.ordinal} month"
       end

@@ -40,6 +40,10 @@ module Rubycron
         "#{"on the " if lead_in}#{ordinal}"
       end
 
+      def u
+        "#{v} starting on the #{start.ordinal}"
+      end
+
       def v
         "on every #{frequency.ordinal} day"
       end

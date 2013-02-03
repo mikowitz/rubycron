@@ -14,10 +14,14 @@ module Rubycron
       end
 
       def r
-        "#{self.start.two_digits}:00 and #{self.stop.two_digits}:59"
+        "#{start.two_digits}:00 and #{stop.two_digits}:59"
       end
 
       alias :s :c
+
+      def u
+        "#{v} starting at #{start.two_digits}:00"
+      end
 
       def v
         "every #{frequency.ordinal} hour"

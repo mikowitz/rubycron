@@ -23,6 +23,10 @@ module Rubycron
         "the #{single_element.to_i == 0 ? "beginning" : "#{single_element.ordinal} minute"}"
       end
 
+      def u(starting_at=true)
+        starting_at ?  "#{v} starting at xx:#{start.two_digits}" : v
+      end
+
       def v
         "every #{frequency} minutes"
       end
