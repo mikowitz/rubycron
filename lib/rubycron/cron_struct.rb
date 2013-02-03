@@ -47,17 +47,48 @@ module Rubycron
       else "between #{hour}:#{self.start.two_digits} and #{hour}:#{self.stop.two_digits}"
       end
     end
+
+    def e
+      'every minute'
+    end
+
+    def s
+      "the #{ordinal}"
+    end
+    def c
+      "the #{collection.map{|minute| minute.ordinal}.to_sentence} minutes"
+    end
+    def v
+      "every #{frequency} minutes"
+    end
+    def r(hours=nil)
+      hours ||= ['xx']
+      "every minute between #{hours.map(&:two_digits).map{|hour| "#{hour}:#{start.two_digits} and #{hour}:#{stop.two_digits}"}.to_sentence}"
+    end
+    def f(hours=nil)
+      hours ||= ['xx']
+      "#{v} between #{hours.map(&:two_digits).map{|hour| "#{hour}:#{start.two_digits} and #{hour}:#{stop.two_digits}"}.to_sentence}"
+    end
   end
 
   class HourHash < CronStruct
     def name; 'hour'; end
 
-    def within_range
-      "#{self.start.two_digits}:00 and #{self.stop.two_digits}:59"
+    def e
+      'every hour'
     end
-
-    def within_collection
-      self.collection.map{|hour| "#{hour.two_digits}:00 and #{hour.two_digits}:59" }.to_sentence
+    def f
+      "#{v} between #{r}"
+    end
+    def v
+      "every #{frequency.ordinal} hour"
+    end
+    def c
+      collection.map{|hour| "#{hour.two_digits}:00 and #{hour.two_digits}:59" }.to_sentence
+    end
+    alias :s :c
+    def r
+      "#{self.start.two_digits}:00 and #{self.stop.two_digits}:59"
     end
   end
 

@@ -1,4 +1,3 @@
-@wip
 Feature: Parsing a cron expression with dates
   In order to give anyone who doesn't have cron format 100% down cold
   a way to check that they've got the correct expression
