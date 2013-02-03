@@ -2,6 +2,10 @@ require 'ostruct'
 
 module Rubycron
   class CronStruct < OpenStruct
+    MONTHS = %w{ January February March April May June July August September October November December }
+    CRON_MONTHS = %w{ jan feb mar apr may jun jul aug sep oct nov dec }
+    DAYS = %w{ Sunday Monday Tuesday Wednesday Thursday Friday Saturday }
+    CRON_DAYS = %w{ sun mon tue wed thu fri sat }
     def every?; !!self.every; end
     def frequency?; !!self.frequency; end
     def range?; !!self.start; end
@@ -57,4 +61,93 @@ module Rubycron
     end
   end
 
+  class DayHash < CronStruct
+    def name; 'day'; end
+    def last_day_of?; !!last; end
+    def nearest_weekday_to?; !!nearest; end
+    def every_day?; every? && !frequency? && !range? && !collection?; end
+    def single_day?; collection? && self.collection.size == 1; end
+    def ordinal; self.single_element.ordinal; end
+    def collection_ordinals
+      "#{collection.map(&:ordinal).to_sentence}"
+    end
+    def range
+      "the #{self.start.ordinal} to the #{self.stop.ordinal}"
+    end
+
+    def to_s
+      return 'w' if nearest_weekday_to?
+      return 'l' if last_day_of?
+      super
+    end
+
+    def e
+      "on every day"
+    end
+    def f
+      "#{v} from #{range}"
+    end
+    def v
+      "on every #{frequency.ordinal} day"
+    end
+    def r
+      "on #{range}"
+    end
+    def s(lead_in=true)
+      "#{"on the " if lead_in}#{ordinal}"
+    end
+    def c(lead_in=true)
+      "#{"on the " if lead_in}#{collection_ordinals}"
+    end
+    def l
+      "on the last day"
+    end
+    def w
+      "on the weekday closest to the #{ordinal}"
+    end
+  end
+
+  class MonthHash < CronStruct
+    def every_month?; every? && !frequency? && !range? && !collection?; end
+    def single_month?; collection? && self.collection.size == 1; end
+
+    def range
+      "from #{s(start)} to #{s(stop)}"
+    end
+
+    def e
+      "every month"
+    end
+
+    def f
+      "every #{frequency.ordinal} month #{range}"
+    end
+    def r
+      "every month #{range}"
+    end
+    def v
+      "every #{frequency.ordinal} month"
+    end
+    def s(month=single_element)
+      if month =~ /[a-z]/i
+        MONTHS[CRON_MONTHS.index(month.downcase)]
+      else
+        MONTHS[month.to_i - 1]
+      end
+    end
+    def c
+      collection.map{|month| s(month)}.to_sentence
+    end
+  end
+
+  class WeekdayHash < CronStruct
+    def every_weekday?; every? && !frequency? && !range? && !collection?; end
+    def single_weekday?; collection? && self.collection.size == 1; end
+
+    def weekday; self.collection[0]; end
+
+    def e
+      ""
+    end
+  end
 end
