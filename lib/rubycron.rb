@@ -1,5 +1,6 @@
 require 'utility_functions'
-%w{ cron_struct parser presenters/day_presenter presenters/time_presenter version }.each {|file| require "rubycron/#{file}" }
+%w{ cron_struct minute_formatter hour_formatter day_of_month_formatter month_formatter day_of_week_formatter }.each {|formatter| require "rubycron/formatters/#{formatter}" }
+%w{ parser presenters/day_presenter presenters/time_presenter version }.each {|file| require "rubycron/#{file}" }
 
 module Rubycron
   def self.parse(expression)
@@ -8,8 +9,8 @@ module Rubycron
     @minute, @hour, @day, @month, @weekday, @year = expression.split(/\s+/)
     return 'Invalid Format' unless valid?
 
-    time = TimeParser.parse(@minute, @hour)
-    day = DayParser.parse(@day, @month, @weekday)
+    time = TimePresenter.parse(@minute, @hour)
+    day = DayPresenter.parse(@day, @month, @weekday)
     result = "#{time} #{day}"
     result.sub(/^(.)/) { $1 == 'x' ? $1 : $1.upcase}
   end

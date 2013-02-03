@@ -1,8 +1,8 @@
 module Rubycron
-  module TimeParser
+  module TimePresenter
     def self.parse(minute, hour)
-      minute = MinuteHash.new(Parser.parse(minute))
-      hour = HourHash.new(Parser.parse(hour))
+      minute = Formatters::MinuteFormatter.new(Parser.parse(minute))
+      hour = Formatters::HourFormatter.new(Parser.parse(hour))
 
       case [minute, hour].map(&:to_s).join('')
       when /[ev]e/ then minute.send(minute.to_s)

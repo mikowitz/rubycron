@@ -1,9 +1,9 @@
 module Rubycron
-  class DayParser
+  class DayPresenter
     def self.parse(day, month, weekday)
-      day = DayHash.new(Parser.parse(day))
-      month = MonthHash.new(Parser.parse(month))
-      weekday = WeekdayHash.new(Parser.parse(weekday))
+      day = Formatters::DayOfMonthFormatter.new(Parser.parse(day))
+      month = Formatters::MonthFormatter.new(Parser.parse(month))
+      weekday = Formatters::DayOfWeekFormatter.new(Parser.parse(weekday))
 
       case [day, month, weekday].map(&:to_s).join('')
       when 'eee' then 'every day'
