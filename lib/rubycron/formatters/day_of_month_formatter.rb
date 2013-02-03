@@ -10,7 +10,7 @@ module Rubycron
         "the #{self.start.ordinal} to the #{self.stop.ordinal}"
       end
 
-      def to_s
+      def sym
         return 'w' if !!nearest
         return 'l' if !!last
         super

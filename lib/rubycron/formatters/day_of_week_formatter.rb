@@ -5,7 +5,7 @@ module Rubycron
       DAYS = %w{ Sunday Monday Tuesday Wednesday Thursday Friday Saturday }
       CRON_DAYS = %w{ sun mon tue wed thu fri sat }
 
-      def to_s
+      def sym
         return 'l' if !!last
         return 'n' if !!nth_week
         super

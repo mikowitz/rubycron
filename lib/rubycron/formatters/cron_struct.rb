@@ -10,13 +10,17 @@ module Rubycron
 
     def single_element; collection[0]; end
 
-    def to_s
+    def sym
       return "e" if every?
       return "f" if frequency? && range?
       return "v" if frequency?
       return "r" if range?
       return "s" if single_element?
       return "c" if collection?
+    end
+
+    def format(*args)
+      send sym, *args
     end
   end
 end
