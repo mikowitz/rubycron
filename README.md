@@ -46,5 +46,9 @@ Or install it yourself as:
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
+## Copyright
+
+Copyright (c) 2013 Michael Berkowitz (@hal678). See LICENSE.txt for further details.
+
 [cron_wiki]: http://en.wikipedia.org/wiki/Cron
 [rubicon]: http://en.wikipedia.org/wiki/Rubicon
