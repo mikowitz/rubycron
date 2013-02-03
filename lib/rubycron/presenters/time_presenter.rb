@@ -1,18 +1,8 @@
 module Rubycron
-  class TimeParser
-
-
-    def initialize(minute, hour)
-      @minute, @hour = minute, hour
-    end
-
+  module TimeParser
     def self.parse(minute, hour)
-      new(minute, hour).parse
-    end
-
-    def parse
-      minute = MinuteHash.new(Parser.parse(@minute))
-      hour = HourHash.new(Parser.parse(@hour))
+      minute = MinuteHash.new(Parser.parse(minute))
+      hour = HourHash.new(Parser.parse(hour))
 
       case [minute, hour].map(&:to_s).join('')
       when /[ev]e/ then minute.send(minute.to_s)
@@ -27,12 +17,8 @@ module Rubycron
       end
     end
 
-    def time(hour, minute)
+    def self.time(hour, minute)
       [hour, minute].map(&:two_digits).join(':')
-    end
-
-    def freq(time_object)
-      "every #{time_object.frequency} #{time_object.name}s"
     end
   end
 end
