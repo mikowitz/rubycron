@@ -37,6 +37,8 @@ Or install it yourself as:
      => "04:03 on May 22, 2015"
     irb > Rubycron.parse("30 6 * * 6L *")
      => "06:30 on the last Saturday of every month"
+    irb > Rubycron.parse("10-15 6,12,18 * NOV THU#4 *")
+    => "Every minute between 06:10 and 06:15, 12:10 and 12:15 and 18:10 and 18:15 on the 4th Thursday of November"
 
 ## Contributing
 
