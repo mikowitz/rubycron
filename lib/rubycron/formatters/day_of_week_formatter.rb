@@ -1,6 +1,5 @@
 module Rubycron
   module Formatters
-
     class DayOfWeekFormatter < CronStruct
       DAYS = %w{ Sunday Monday Tuesday Wednesday Thursday Friday Saturday }
       CRON_DAYS = %w{ sun mon tue wed thu fri sat }

@@ -3,9 +3,6 @@ module Rubycron
     class DayOfMonthFormatter < CronStruct
       def ordinal; self.single_element.ordinal; end
 
-      def collection_ordinals
-        "#{collection.map(&:ordinal).to_sentence}"
-      end
       def range
         "the #{self.start.ordinal} to the #{self.stop.ordinal}"
       end
@@ -17,7 +14,7 @@ module Rubycron
       end
 
       def c(lead_in=true)
-        "#{"on the " if lead_in}#{collection_ordinals}"
+        "#{"on the " if lead_in}#{collection.map(&:ordinal).to_sentence}"
       end
 
       def e
