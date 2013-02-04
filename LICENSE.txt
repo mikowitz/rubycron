@@ -1,9 +1,0 @@
-Copyright (c) 2013 Michael Berkowitz
-
-MIT License
-
-take my code with you
-and do whatever you want
-but please don't blame me
-
-  --Aaron Swartz
