@@ -2,7 +2,7 @@
 
 * you _sorta_ know how to write a [cron][cron_wiki] expression
 * you have to write them from time to time, but...
-* you know that if you just have a friend or the internet tell you how, you'll never really feel any more comfortable writing one
+* you know that getting the answer from a friend (or the internet) isn't going to help you learn how to write them for yourself
 * you'd just like to know if that cron expression you just wrote does what you meant it to
 
 Rubycron has got you covered.
