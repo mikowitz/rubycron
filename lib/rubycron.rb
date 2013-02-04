@@ -1,6 +1,6 @@
 require 'utility_functions'
-%w{ cron_struct minute_formatter hour_formatter day_of_month_formatter month_formatter day_of_week_formatter year_formatter }.each {|formatter| require "rubycron/formatters/#{formatter}" }
-%w{ parser presenters/day_presenter presenters/time_presenter presenters/year_presenter version }.each {|file| require "rubycron/#{file}" }
+require 'rubycron/parser'
+Dir['./lib/rubycron/**/*.rb'].each {|file| require file}
 
 module Rubycron
   def self.parse(expression)
