@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Rubycron::VERSION
   gem.authors       = ["Michael Berkowitz"]
   gem.email         = ["michael.berkowitz@gmail.com"]
-  gem.description   = %q{Parser for cron expressions}
-  gem.summary       = %q{Something about a river, and ... dammit, I swear I had something for this!}
+  gem.description   = %q{Spell-checker for cron expressions}
+  gem.summary       = %q{Confirm that the cron expression you just wrote does what you meant it to do.}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
